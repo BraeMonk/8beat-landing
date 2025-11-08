@@ -559,169 +559,99 @@
     --space-4: 1rem;
   }
 
-  /* Layout: tabs stack vertically */
-  .tabs-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
+  body {
+    padding: var(--space-4);
   }
 
-  .tab-content {
-    padding: 1rem;
+  .landing-shell {
+    padding: var(--space-5);
   }
 
-  /* Hero section */
-  .hero {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 2rem 1rem;
+  .landing-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
   }
 
-  .hero h1 {
-    font-size: var(--text-xl);
-    line-height: 1.2;
+  .landing-inner {
+    gap: var(--space-4);
   }
 
-  .hero p {
-    font-size: var(--text-base);
-    margin-top: 0.5rem;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  /* Feature / overview panels */
-  .panel {
-    margin: 0 auto;
+  /* ✅ Tabs: full-width on mobile */
+  .landing-tabs {
     width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: 0.4rem 0.6rem;
   }
 
-  .grid {
-    display: flex;
+  .landing-tab-btn {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 0.5rem 0.25rem;
+    font-size: var(--text-sm);
+  }
+
+  /* Hero & buttons */
+  .hero-title {
+    font-size: var(--text-3xl);
+  }
+
+  .hero-sub {
+    max-width: 100%;
+  }
+
+  .hero-actions {
     flex-direction: column;
-    gap: 1.5rem;
+    align-items: stretch;
   }
 
-  /* Buttons */
   .btn,
   .btn-secondary {
     width: 100%;
     text-align: center;
   }
 
-  /* Tables (feature comparison) */
-  table {
-    font-size: 0.9rem;
+  /* Cards & grids */
+  .grid-2 {
+    grid-template-columns: 1fr;
   }
 
-  table th,
-  table td {
-    padding: 0.5rem;
-  }
-
-  /* PayPal button area */
-  .pp-58FUHY8RYFPP2 {
-    width: 100% !important;
-  }
-
-  /* Tutorial page adjustments */
-  .tutorial-section {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 2rem;
-  }
-
-  .tutorial-section .panel {
-    width: 100%;
-  }
-
-  /* Footer or call-to-action */
-  footer,
-  .cta-footer {
-    text-align: center;
-    padding: 1.5rem 1rem;
+  .side-panel {
+    order: 3;
   }
 }
 
 @media (max-width: 500px) {
-  /* Even tighter phone layout */
   body {
     font-size: 0.95rem;
-    padding: 0;
-    margin: 0;
+    padding: var(--space-3);
   }
 
-  h1, h2, h3 {
-    word-break: break-word;
-  }
-
-  .hero {
-    padding: 1.5rem 0.5rem;
-  }
-
-  .hero-buttons {
-    width: 100%;
-  }
-
-  .btn,
-  .btn-secondary {
-    font-size: 0.95rem;
-    height: auto;
-    padding: 0.75rem 1rem;
-  }
-
-  .panel {
-    padding: 1rem;
-  }
-}
-
-    /* Ensure tabs fit full screen width in portrait mode */
-@media (max-width: 900px) {
-  .tabs-nav {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.25rem 0.5rem;
-    scrollbar-width: none; /* Firefox hide scrollbar */
-  }
-  .tabs-nav::-webkit-scrollbar {
-    display: none; /* Chrome/Safari hide scrollbar */
-  }
-
-  .tabs-nav button {
-    flex: 1 0 auto;
-    min-width: 33.3%; /* Three tabs fill screen evenly */
-    text-align: center;
-    font-size: var(--text-base);
-    white-space: nowrap;
+  .landing-shell {
     border-radius: 0;
-    border: none;
-    background: var(--surface-2, #111);
-    color: var(--text-1, #fff);
-    padding: 0.75rem 0.25rem;
+    padding: var(--space-4);
   }
 
-  .tabs-nav button.active {
-    background: var(--accent, #FFD140);
-    color: #000;
+  .landing-tabs {
+    padding: 0.35rem 0.4rem;
+  }
+
+  .landing-tab-btn {
+    padding: 0.45rem 0.2rem;
+    font-size: var(--text-sm);
+  }
+
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+
+  .card {
+    padding: var(--space-3);
   }
 }
 
-/* Ultra-narrow phones (under 400px) */
-@media (max-width: 400px) {
-  .tabs-nav button {
-    min-width: 100%; /* One at a time horizontally scrollable */
-    font-size: 0.95rem;
-  }
-}
   </style>
 </head>
 <body>
