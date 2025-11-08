@@ -792,13 +792,18 @@
                 </ul>
 
                 <div style="margin-top: var(--space-3); display:flex; flex-direction:column; gap:0.5rem;">
-                  <!-- You can wire this to the same PayPal link you already use in-app -->
-                  <a href="https://www.paypal.com/ncp/payment/58FUHY8RYFPP2"
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     class="btn btn-primary">
+                  <h4 style="font-size: var(--text-base); font-weight:700; margin-bottom:0.25rem;">
                     💎 Buy 8-Beat Studio Pro
-                  </a>
+                  </h4>
+                  <!-- You can wire this to the same PayPal link you already use in-app -->
+                  <div>
+                    <style>.pp-58FUHY8RYFPP2{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
+                    <form action="https://www.paypal.com/ncp/payment/58FUHY8RYFPP2" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+                      <input class="pp-58FUHY8RYFPP2" type="submit" value="Buy Now" />
+                      <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+                      <section style="font-size: 0.75rem;"> Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+                    </form>
+                  </div>
                   <!-- TODO: set this href to your actual studio URL -->
                   <a href="https://braemonk.github.io/beat-maker/" class="btn btn-secondary">
                     🔓 I already have a key – open the Studio
