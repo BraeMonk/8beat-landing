@@ -126,6 +126,7 @@
       backdrop-filter: blur(30px) saturate(150%);
       position: relative;
       overflow: hidden;
+      overflow-x: hidden;
     }
 
     .landing-shell::before {
@@ -248,16 +249,17 @@
     }
 
     /* Tabs */
-    .landing-tabs {
-      display: flex;
-      gap: var(--space-2);
-      padding: var(--space-2);
-      background: var(--surface);
-      border-radius: var(--radius-full);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 12px 30px rgba(0,0,0,.4);
-      width: fit-content;
-    }
+.landing-tabs {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--surface);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 30px rgba(0,0,0,.4);
+  width: 100%;              /* ⬅️ fill the shell instead of fit-content */
+  box-sizing: border-box;
+}
 
     .landing-tab-btn {
       border: none;
@@ -598,9 +600,11 @@
 
   .landing-tab-btn {
     flex: 1 1 0;
+    min-width: 0;            /* ⬅️ allow shrinking below content width */
     text-align: center;
     padding: 0.5rem 0.25rem;
     font-size: var(--text-sm);
+    white-space: normal;     /* ⬅️ allow the label to wrap */
   }
 
   /* Hero & buttons */
