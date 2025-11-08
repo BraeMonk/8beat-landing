@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>8-Beat Studio – Browser-Native DAW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#000000"/>
+  <link rel="apple-touch-icon" href="./lofi8Beat.png">
+
+  <!-- Fonts & Design System (same family as the app) -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+    :root {
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+      --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+      --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+      --text-base: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
+      --text-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-xl: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);
+      --text-2xl: clamp(1.25rem, 1.125rem + 0.625vw, 1.5rem);
+      --text-3xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+      --text-4xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --radius-2xl: 32px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 8px rgba(0,0,0,.18);
+      --shadow-md: 0 6px 18px rgba(0,0,0,.26);
+      --shadow-lg: 0 14px 40px rgba(0,0,0,.35);
+
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #0f1420;
+      --bg-tertiary: #141824;
+
+      --text-primary: #e9ecff;
+      --text-secondary: #c8ccff;
+      --text-tertiary: #9aa0c7;
+      --text-muted: #6b7199;
+
+      --accent-primary: #7c83ff;
+      --accent-secondary: #8d6cff;
+      --accent-tertiary: #9f7eff;
+
+      --surface: linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.04) 100%);
+      --surface-elevated: linear-gradient(135deg, rgba(255,255,255,.13) 0%, rgba(255,255,255,.06) 100%);
+      --glass-border: rgba(255,255,255,.12);
+      --glass-border-strong: rgba(255,255,255,.22);
+
+      --ring-w: 3px;
+      --ring-offset: 2px;
+      --ring: rgba(180,190,255,.6);
+
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --duration-fast: 150ms;
+      --duration-base: 220ms;
+      --duration-slow: 320ms;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background:
+        radial-gradient(ellipse 1200px 800px at 15% -5%,
+          color-mix(in oklab, var(--accent-primary) 15%, transparent),
+          transparent 60%),
+        radial-gradient(ellipse 1000px 700px at 85% 105%,
+          color-mix(in oklab, var(--accent-secondary) 12%, transparent),
+          transparent 60%),
+        linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      padding: var(--space-6);
+    }
+
+    .landing-shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(var(--space-5), 4vw, var(--space-10));
+      border-radius: var(--radius-2xl);
+      background: linear-gradient(145deg,
+        rgba(15,22,40,.95),
+        rgba(7,10,24,.98));
+      border: 1px solid var(--glass-border-strong);
+      box-shadow:
+        var(--shadow-lg),
+        0 0 80px rgba(124,131,255,.25);
+      backdrop-filter: blur(30px) saturate(150%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .landing-shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(124,131,255,.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(157,106,255,.18), transparent 55%);
+      opacity: .8;
+      pointer-events: none;
+    }
+
+    .landing-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* Header */
+    .landing-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--radius-lg);
+      display: grid;
+      place-items: center;
+      font-size: var(--text-2xl);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--bg-primary);
+      font-weight: 900;
+      box-shadow:
+        0 12px 28px rgba(0,0,0,.6),
+        0 0 28px rgba(124,131,255,.55);
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+      transition: transform var(--duration-base) var(--ease-bounce);
+    }
+
+    .logo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,.3) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform var(--duration-slow) var(--ease-smooth);
+      opacity: .8;
+    }
+
+    .logo-block:hover .logo {
+      transform: scale(1.05) rotate(3deg);
+    }
+
+    .logo-block:hover .logo::before {
+      transform: translateX(100%);
+    }
+
+    .title-group h1 {
+      font-size: var(--text-3xl);
+      letter-spacing: -0.03em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff, var(--accent-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .title-group .tagline {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin-top: 0.15rem;
+    }
+
+    .header-cta {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      background: rgba(15,23,42,.9);
+      border: 1px solid var(--glass-border);
+      color: var(--text-secondary);
+    }
+
+    .badge-pill {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--bg-primary);
+      border-color: transparent;
+      box-shadow: 0 0 26px rgba(124,131,255,.55);
+    }
+
+    /* Tabs */
+    .landing-tabs {
+      display: flex;
+      gap: var(--space-2);
+      padding: var(--space-2);
+      background: var(--surface);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 12px 30px rgba(0,0,0,.4);
+      width: fit-content;
+    }
+
+    .landing-tab-btn {
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 0.45rem 1.2rem;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      background: transparent;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--duration-base) var(--ease-smooth);
+      white-space: nowrap;
+    }
+
+    .landing-tab-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      opacity: 0;
+      transition: opacity var(--duration-base) var(--ease-smooth);
+    }
+
+    .landing-tab-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .landing-tab-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,.04);
+    }
+
+    .landing-tab-btn.active {
+      color: var(--bg-primary);
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(124,131,255,.65);
+    }
+
+    .landing-tab-btn.active::before {
+      opacity: 1;
+    }
+
+    /* Layout main */
+    .landing-main {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: var(--space-6);
+      align-items: flex-start;
+      margin-top: var(--space-4);
+    }
+
+    @media (max-width: 900px) {
+      body { padding: var(--space-4); }
+      .landing-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sections */
+    .landing-section {
+      display: none;
+      animation: fadeIn var(--duration-slow) var(--ease-smooth) both;
+    }
+
+    .landing-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-size: var(--text-4xl);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      margin-bottom: var(--space-3);
+    }
+
+    .hero-title span.gradient {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      max-width: 36rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .hero-meta {
+      margin-top: var(--space-3);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      max-width: 38rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius-md);
+      border: none;
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      transform: translateY(0);
+      transition: all var(--duration-base) var(--ease-smooth);
+      outline: none;
+      white-space: nowrap;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 35%, rgba(255,255,255,.25) 50%, transparent 65%);
+      transform: translateX(-110%);
+      transition: transform 480ms var(--ease-smooth);
+      opacity: .9;
+    }
+
+    .btn:hover::before {
+      transform: translateX(110%);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--bg-primary);
+      box-shadow:
+        var(--shadow-md),
+        0 0 32px rgba(124,131,255,.7);
+    }
+
+    .btn-primary:hover {
+      box-shadow:
+        var(--shadow-lg),
+        0 0 44px rgba(124,131,255,.9);
+    }
+
+    .btn-secondary {
+      background: rgba(15,23,42,.9);
+      border: 1px solid var(--glass-border);
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(19,27,51,.95);
+      border-color: color-mix(in oklab, var(--accent-primary) 40%, var(--glass-border));
+      color: var(--text-primary);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-tertiary);
+      border: none;
+      padding-inline: 0;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text-primary);
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: var(--text-xs);
+    }
+
+    /* Right column (feature / card stack) */
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      background: var(--surface-elevated);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-2);
+    }
+
+    .card p {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    ul.feature-list {
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+      margin-top: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    ul.feature-list li::before {
+      content: "•";
+      color: var(--accent-secondary);
+      margin-right: 0.5rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: var(--space-2);
+    }
+
+    .pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      border: 1px solid rgba(148,163,255,.4);
+      background: rgba(15,23,42,.9);
+      color: var(--text-secondary);
+    }
+
+    /* Tutorial / content typography */
+    .section-heading {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .section-sub {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .step-list {
+      list-style: decimal;
+      padding-left: 1.3rem;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .step-list strong {
+      color: var(--text-primary);
+    }
+
+    .kbd {
+      display: inline-block;
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--glass-border);
+      background: rgba(15,23,42,.9);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .footer {
+      margin-top: var(--space-6);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-shell">
+    <div class="landing-inner">
+
+      <!-- Header -->
+      <header class="landing-header">
+        <div class="logo-block">
+          <div class="logo">🎹</div>
+          <div class="title-group">
+            <h1>8-Beat Studio</h1>
+            <div class="tagline">Fun With Noise • Browser-Native DAW</div>
+          </div>
+        </div>
+        <div class="header-cta">
+          <div class="badge badge-pill">v1.6 • Pro-Ready</div>
+          <div class="badge">Hand-crafted multitrack studio</div>
+        </div>
+      </header>
+
+      <!-- Top-level tabs -->
+      <nav class="landing-tabs" aria-label="Primary">
+        <button class="landing-tab-btn active" data-landing-tab="home">
+          <span>🏠 Home</span>
+        </button>
+        <button class="landing-tab-btn" data-landing-tab="overview">
+          <span>📦 Overview</span>
+        </button>
+        <button class="landing-tab-btn" data-landing-tab="tutorial">
+          <span>📚 Tutorial &amp; Pro</span>
+        </button>
+      </nav>
+
+      <!-- Main area -->
+      <main class="landing-main">
+
+        <!-- LEFT: dynamic content -->
+        <section class="landing-section active" id="homeSection" data-landing-section="home" aria-label="Home">
+          <h2 class="hero-title">
+            A <span class="gradient">theory-aware</span> DAW<br/>
+            that runs in your browser.
+          </h2>
+          <p class="hero-sub">
+            8-Beat Studio is a harmony-aware, multitrack production environment that lives in a single tab.
+            Generate beats, build chord progressions, record audio, shape FX, and export full mixes –
+            with your samples actually following your chords.
+          </p>
+          <div class="hero-actions">
+            <!-- TODO: set this to your actual studio URL -->
+            <a href="./studio.html" class="btn btn-primary" id="launchStudioBtn">
+              ▶️ Launch 8-Beat Studio
+            </a>
+            <button class="btn btn-secondary" type="button" data-jump-tab="overview">
+              👀 See What It Can Do
+            </button>
+            <button class="btn btn-ghost small" type="button" data-jump-tab="tutorial">
+              New here? Start with the tutorial →
+            </button>
+          </div>
+          <p class="hero-meta">
+            No installs • No plugins • Works anywhere Chrome / Edge / Safari runs.
+            Your Pro license is unlocked locally with a key after payment.
+          </p>
+        </section>
+
+        <section class="landing-section" id="overviewSection" data-landing-section="overview" aria-label="Overview">
+          <h2 class="section-heading">What makes 8-Beat different?</h2>
+          <p class="section-sub">
+            It’s not just another web toy – it’s a real DAW that thinks in music theory and
+            glues together generation, sequencing, harmony, multitrack audio, FX, and samples.
+          </p>
+
+          <div class="grid-2">
+            <div>
+              <h3>🎼 Harmony-aware engine</h3>
+              <ul class="feature-list">
+                <li>Set a <strong>key, scale, and octave</strong> in the Harmony tab.</li>
+                <li>Generate and edit <strong>chord progressions</strong> with chips & templates.</li>
+                <li>Instrument tracks (bass, keys, guitar, leads, etc.) follow your chord changes.</li>
+                <li>The sequencer no longer repeats one static note – it reacts to harmony.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>🥁 Generator, Sequencer &amp; Multitrack</h3>
+              <ul class="feature-list">
+                <li><strong>Generate</strong> genre-aware drum + instrument patterns instantly.</li>
+                <li>Deep step sequencer with velocity, probability and per-row controls.</li>
+                <li><strong>Multitrack timeline</strong> for arranging regions, stems and live audio.</li>
+                <li>Export stems or full mix as high-quality audio.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>📂 Sample kits &amp; instruments</h3>
+              <p>
+                The Samples tab gives you genre-tuned kits (lofi, metal, trap, DnB, house, rock, etc.)
+                plus instruments baked directly into the kit definition.  [oai_citation:3‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)
+              </p>
+              <ul class="feature-list">
+                <li>Preview &amp; tweak one-shots (pitch, decay, tone, noise, lofi, distortion).</li>
+                <li>Generate full <strong>sample packs</strong> and export as a ZIP.</li>
+                <li>Load samples into the sequencer and multitrack in real time.</li>
+                <li>Revert drums to your default acoustic kit while keeping instrument samples.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>🎛️ Mixer, FX &amp; Mastering</h3>
+              <ul class="feature-list">
+                <li>Dedicated Mixer tab with per-channel mute / solo / volume / pan.  [oai_citation:4‡8beatBackup.html](sediment://file_00000000173871fbae1bfa2a8b03de17)</li>
+                <li>FX tab with chainable effects (reverb, delay, filters, etc.).</li>
+                <li>Master bus processing to glue everything together.</li>
+                <li>Designed for low-latency playback in Web Audio with Tone.js.  [oai_citation:5‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: var(--space-4);">
+            <h3>Who is 8-Beat Studio for?</h3>
+            <p>
+              Producers, songwriters, and sound designers who want a fast, musical sketchpad that feels
+              like a DAW – without the install overhead. Perfect for laptops, Chromebooks, school labs,
+              or anyone who loves the idea of a full studio living in a single tab.
+            </p>
+            <div class="pill-row">
+              <span class="pill">Beatmakers</span>
+              <span class="pill">Songwriters</span>
+              <span class="pill">Educators</span>
+              <span class="pill">Sound Designers</span>
+              <span class="pill">Live Sketching</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-section" id="tutorialSection" data-landing-section="tutorial" aria-label="Tutorial & Pro">
+          <h2 class="section-heading">Quickstart: From zero to first track</h2>
+          <p class="section-sub">
+            Follow these steps the first time you open 8-Beat Studio. Once you’re comfortable,
+            you can dive into Pro and unlock everything permanently.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>1. Launch and pick a vibe</h3>
+              <ol class="step-list">
+                <li><strong>Launch 8-Beat Studio</strong> using the <em>Launch</em> button above.</li>
+                <li>At the top of the app, choose a <strong>genre preset</strong> (Lofi, Hip-Hop, Ambient, etc.).  [oai_citation:6‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)</li>
+                <li>Use the sidebar (left) to move between:
+                  <br/>🎲 Generate • 🎹 Sequencer • 🎚️ Mixer • 🎛️ Effects • 🎼 Harmony • 🎙️ Multitrack • 📂 Samples.  [oai_citation:7‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                </li>
+                <li>In the <strong>Generate</strong> tab, click your beat-generation controls to create a starting groove.</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h3>2. Shape the beat &amp; harmony</h3>
+              <ol class="step-list">
+                <li>Open the <strong>Sequencer</strong> tab and toggle steps to taste.
+                  Use <span class="kbd">Alt</span>/<span class="kbd">Shift</span>/<span class="kbd">Ctrl</span> combos for velocity &amp; probability tweaks.</li>
+                <li>Switch to the <strong>Harmony</strong> tab:
+                  <ul class="feature-list" style="margin-top:0.5rem;">
+                    <li>Set <strong>Key</strong>, <strong>Scale</strong>, and <strong>Octave</strong>.</li>
+                    <li>Tap chords in “Available Chords” to build a progression.</li>
+                    <li>Use templates like “Lo-Fi”, “Neo-Soul”, or “II-V-I” to auto-build progressions.</li>
+                  </ul>
+                </li>
+                <li>Play back your loop – instrument tracks now follow the chord progression instead of repeating a single note.</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h3>3. Samples, instruments &amp; multitrack</h3>
+              <ol class="step-list">
+                <li>Open <strong>Samples</strong>:
+                  <ul class="feature-list" style="margin-top:0.5rem;">
+                    <li>Choose or randomize a genre kit.</li>
+                    <li>Edit one-shot parameters (pitch, decay, tone, noise, lofi, distortion).</li>
+                    <li>Generate a full sample pack and export a ZIP if you want to keep it.</li>
+                  </ul>
+                </li>
+                <li>Load samples into the sequencer. Drums lock to the groove; instruments obey your harmony settings.</li>
+                <li>Switch to <strong>Multitrack</strong> to arrange, duplicate, and layer regions, and to record live audio takes into tracks.</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h3>4. Mix, add FX, and export</h3>
+              <ol class="step-list">
+                <li>Use the <strong>Mixer</strong> tab to balance channels, mute/solo, and control levels.  [oai_citation:8‡8beatBackup.html](sediment://file_00000000173871fbae1bfa2a8b03de17)</li>
+                <li>Add reverb, delay, filters and more in the <strong>Effects</strong> tab.</li>
+                <li>When you’re happy, use the export controls to bounce:
+                  <ul class="feature-list" style="margin-top:0.5rem;">
+                    <li>A full mixed stereo track.</li>
+                    <li>Multitrack stems for further work in another DAW if needed.</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: var(--space-4);">
+            <h3>Unlocking 8-Beat Studio Pro</h3>
+            <p class="section-sub">
+              Pro is unlocked with a license key. Payment is handled securely via PayPal; your key is sent to the
+              email you used at checkout. You then paste that key into the app’s Unlock Pro modal.
+            </p>
+
+            <div class="grid-2">
+              <div>
+                <h4 style="font-size: var(--text-base); margin-bottom: var(--space-2);">Step-by-step Pro flow</h4>
+                <ol class="step-list">
+                  <li><strong>Purchase Pro</strong><br/>
+                    Click the “Buy Now” / Pro purchase button (on this page or inside the app).  
+                    The checkout is processed by PayPal using their secure payment form.  [oai_citation:9‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                  </li>
+                  <li><strong>Receive your license key via email</strong><br/>
+                    After successful payment, you’ll receive an email containing your
+                    <span class="kbd">8BEAT-XXXX-XXXX-XXXX</span> style license key. (Keep this email safe.)  [oai_citation:10‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                  </li>
+                  <li><strong>Open the Unlock Pro modal</strong><br/>
+                    In 8-Beat Studio, use the sidebar navigation and click
+                    <span class="kbd">🔓 Unlock Pro</span>. This opens the Pro dialog with a license input.  [oai_citation:11‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                  </li>
+                  <li><strong>Paste and confirm</strong><br/>
+                    Paste your key into the input field and click <strong>Confirm</strong>.
+                    The app validates the key and stores the unlock state locally so Pro features stay enabled.  [oai_citation:12‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)
+                  </li>
+                  <li><strong>Enjoy Pro forever</strong><br/>
+                    Once unlocked, Pro features are available on that browser/profile.
+                    If you switch devices, just open 8-Beat Studio there and paste your key again.
+                  </li>
+                </ol>
+              </div>
+
+              <div>
+                <h4 style="font-size: var(--text-base); margin-bottom: var(--space-2);">What Pro gives you</h4>
+                <ul class="feature-list">
+                  <li>Full multitrack editing &amp; extended export options.</li>
+                  <li>Advanced sample generation &amp; genre packs.</li>
+                  <li>Deeper FX, routing and mastering tools.</li>
+                  <li>Future Pro-only features as the app evolves.</li>
+                </ul>
+
+                <div style="margin-top: var(--space-3); display:flex; flex-direction:column; gap:0.5rem;">
+                  <!-- You can wire this to the same PayPal link you already use in-app -->
+                  <a href="https://www.paypal.com/ncp/payment/58FUHY8RYFPP2"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     class="btn btn-primary">
+                    💎 Buy 8-Beat Studio Pro
+                  </a>
+                  <!-- TODO: set this href to your actual studio URL -->
+                  <a href="./studio.html" class="btn btn-secondary">
+                    🔓 I already have a key – open the Studio
+                  </a>
+                  <span class="small">
+                    After payment, check your email for your license key.
+                    If it doesn’t show up within a few minutes, double-check your spam / promotions folder.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: persistent marketing cards -->
+        <aside class="side-panel" aria-label="Highlights">
+          <div class="card">
+            <h3>Why browser-native?</h3>
+            <p>
+              No installers, no dongles, no activation drama. 8-Beat Studio runs wherever you can open a tab,
+              but still feels like a focused desktop DAW – with a splash screen, sidebar navigation,
+              tabs for Generate / Sequencer / Mixer / FX / Harmony / Multitrack / Samples, and a full transport bar.  [oai_citation:13‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)  [oai_citation:14‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)
+            </p>
+          </div>
+          <div class="card">
+            <h3>Designed by one producer</h3>
+            <p>
+              8-Beat Studio was built by a single developer–producer as an experiment:
+              “How far can a browser DAW go if it’s actually musical?”  
+              The answer: pretty far.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Best enjoyed with headphones</h3>
+            <p>
+              For the cleanest experience:
+            </p>
+            <ul class="feature-list">
+              <li>Use a modern browser (Chrome / Edge / Safari).</li>
+              <li>Close extra tabs to minimize audio glitches.</li>
+              <li>Plug in headphones or studio monitors.</li>
+            </ul>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        Built with Web Audio, Tone.js, and a ridiculous amount of stubbornness.  
+        JavaScript. Browser. One person. One week… and counting.
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    // Simple tab + jump handling
+    const tabButtons = document.querySelectorAll('.landing-tab-btn');
+    const sections = document.querySelectorAll('.landing-section');
+    const jumps = document.querySelectorAll('[data-jump-tab]');
+
+    function setActiveTab(tabName) {
+      tabButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.landingTab === tabName);
+      });
+      sections.forEach(sec => {
+        sec.classList.toggle('active', sec.dataset.landingSection === tabName);
+      });
+    }
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setActiveTab(btn.dataset.landingTab);
+      });
+    });
+
+    jumps.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.jumpTab;
+        setActiveTab(target);
+      });
+    });
+
+    // Optional: if hash is present (#overview, #tutorial), respect it
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['home','overview','tutorial'].includes(hash)) {
+      setActiveTab(hash);
+    }
+  </script>
+</body>
+</html>
