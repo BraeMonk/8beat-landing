@@ -546,6 +546,138 @@
       color: var(--text-muted);
       text-align: center;
     }
+
+    /* ===========================
+   📱 Mobile & Tablet Styles
+   =========================== */
+@media (max-width: 900px) {
+  :root {
+    --text-xl: 1.4rem;
+    --text-lg: 1.1rem;
+    --text-base: 1rem;
+    --text-sm: 0.9rem;
+    --space-4: 1rem;
+  }
+
+  /* Layout: tabs stack vertically */
+  .tabs-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .tab-content {
+    padding: 1rem;
+  }
+
+  /* Hero section */
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: var(--text-xl);
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: var(--text-base);
+    margin-top: 0.5rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Feature / overview panels */
+  .panel {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Buttons */
+  .btn,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Tables (feature comparison) */
+  table {
+    font-size: 0.9rem;
+  }
+
+  table th,
+  table td {
+    padding: 0.5rem;
+  }
+
+  /* PayPal button area */
+  .pp-58FUHY8RYFPP2 {
+    width: 100% !important;
+  }
+
+  /* Tutorial page adjustments */
+  .tutorial-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .tutorial-section .panel {
+    width: 100%;
+  }
+
+  /* Footer or call-to-action */
+  footer,
+  .cta-footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  /* Even tighter phone layout */
+  body {
+    font-size: 0.95rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  h1, h2, h3 {
+    word-break: break-word;
+  }
+
+  .hero {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .hero-buttons {
+    width: 100%;
+  }
+
+  .btn,
+  .btn-secondary {
+    font-size: 0.95rem;
+    height: auto;
+    padding: 0.75rem 1rem;
+  }
+
+  .panel {
+    padding: 1rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -644,7 +776,7 @@
               <h3>📂 Sample kits &amp; instruments</h3>
               <p>
                 The Samples tab gives you genre-tuned kits (lofi, metal, trap, DnB, house, rock, etc.)
-                plus instruments baked directly into the kit definition.  [oai_citation:3‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)
+                plus instruments baked directly into the kit definition.
               </p>
               <ul class="feature-list">
                 <li>Preview &amp; tweak one-shots (pitch, decay, tone, noise, lofi, distortion).</li>
@@ -657,10 +789,10 @@
             <div>
               <h3>🎛️ Mixer, FX &amp; Mastering</h3>
               <ul class="feature-list">
-                <li>Dedicated Mixer tab with per-channel mute / solo / volume / pan.  [oai_citation:4‡8beatBackup.html](sediment://file_00000000173871fbae1bfa2a8b03de17)</li>
+                <li>Dedicated Mixer tab with per-channel mute / solo / volume / pan.</li>
                 <li>FX tab with chainable effects (reverb, delay, filters, etc.).</li>
                 <li>Master bus processing to glue everything together.</li>
-                <li>Designed for low-latency playback in Web Audio with Tone.js.  [oai_citation:5‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)</li>
+                <li>Designed for low-latency playback in Web Audio with Tone.js.</li>
               </ul>
             </div>
           </div>
@@ -668,7 +800,7 @@
           <div class="card" style="margin-top: var(--space-4);">
             <h3>Who is 8-Beat Studio for?</h3>
             <p>
-              Producers, songwriters, and sound designers who want a fast, musical sketchpad that feels
+              Producers, songwriters, sound designers, and hobbyists who want a fast, musical sketchpad that feels
               like a DAW – without the install overhead. Perfect for laptops, Chromebooks, school labs,
               or anyone who loves the idea of a full studio living in a single tab.
             </p>
@@ -694,9 +826,9 @@
               <h3>1. Launch and pick a vibe</h3>
               <ol class="step-list">
                 <li><strong>Launch 8-Beat Studio</strong> using the <em>Launch</em> button above.</li>
-                <li>At the top of the app, choose a <strong>genre preset</strong> (Lofi, Hip-Hop, Ambient, etc.).  [oai_citation:6‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)</li>
+                <li>At the top of the app, choose a <strong>genre preset</strong> (Lofi, Hip-Hop, Ambient, etc.).</li>
                 <li>Use the sidebar (left) to move between:
-                  <br/>🎲 Generate • 🎹 Sequencer • 🎚️ Mixer • 🎛️ Effects • 🎼 Harmony • 🎙️ Multitrack • 📂 Samples.  [oai_citation:7‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                  <br/>🎲 Generate • 🎹 Sequencer • 🎚️ Mixer • 🎛️ Effects • 🎼 Harmony • 🎙️ Multitrack • 📂 Samples.
                 </li>
                 <li>In the <strong>Generate</strong> tab, click your beat-generation controls to create a starting groove.</li>
               </ol>
@@ -736,7 +868,7 @@
             <div class="card">
               <h3>4. Mix, add FX, and export</h3>
               <ol class="step-list">
-                <li>Use the <strong>Mixer</strong> tab to balance channels, mute/solo, and control levels.  [oai_citation:8‡8beatBackup.html](sediment://file_00000000173871fbae1bfa2a8b03de17)</li>
+                <li>Use the <strong>Mixer</strong> tab to balance channels, mute/solo, and control levels.</li>
                 <li>Add reverb, delay, filters and more in the <strong>Effects</strong> tab.</li>
                 <li>When you’re happy, use the export controls to bounce:
                   <ul class="feature-list" style="margin-top:0.5rem;">
@@ -761,19 +893,19 @@
                 <ol class="step-list">
                   <li><strong>Purchase Pro</strong><br/>
                     Click the “Buy Now” / Pro purchase button (on this page or inside the app).  
-                    The checkout is processed by PayPal using their secure payment form.  [oai_citation:9‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                    The checkout is processed by PayPal using their secure payment form.
                   </li>
                   <li><strong>Receive your license key via email</strong><br/>
                     After successful payment, you’ll receive an email containing your
-                    <span class="kbd">8BEAT-XXXX-XXXX-XXXX</span> style license key. (Keep this email safe.)  [oai_citation:10‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                    <span class="kbd">8BEAT-XXXX-XXXX-XXXX</span> style license key. (Keep this email safe.)
                   </li>
                   <li><strong>Open the Unlock Pro modal</strong><br/>
                     In 8-Beat Studio, use the sidebar navigation and click
-                    <span class="kbd">🔓 Unlock Pro</span>. This opens the Pro dialog with a license input.  [oai_citation:11‡8beatBackup.html](sediment://file_000000008edc71f593a43f34172e66ab)
+                    <span class="kbd">🔓 Unlock Pro</span>. This opens the Pro dialog with a license input.
                   </li>
                   <li><strong>Paste and confirm</strong><br/>
                     Paste your key into the input field and click <strong>Confirm</strong>.
-                    The app validates the key and stores the unlock state locally so Pro features stay enabled.  [oai_citation:12‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)
+                    The app validates the key and stores the unlock state locally so Pro features stay enabled.
                   </li>
                   <li><strong>Enjoy Pro forever</strong><br/>
                     Once unlocked, Pro features are available on that browser/profile.
@@ -825,7 +957,7 @@
             <p>
               No installers, no dongles, no activation drama. 8-Beat Studio runs wherever you can open a tab,
               but still feels like a focused desktop DAW – with a splash screen, sidebar navigation,
-              tabs for Generate / Sequencer / Mixer / FX / Harmony / Multitrack / Samples, and a full transport bar.  [oai_citation:13‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)  [oai_citation:14‡index (5).html](sediment://file_000000003d6071f797d01e8aabbae9dd)
+              tabs for Generate / Sequencer / Mixer / FX / Harmony / Multitrack / Samples, and a full transport bar.
             </p>
           </div>
           <div class="card">
