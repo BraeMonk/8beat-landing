@@ -678,6 +678,50 @@
     padding: 1rem;
   }
 }
+
+    /* Ensure tabs fit full screen width in portrait mode */
+@media (max-width: 900px) {
+  .tabs-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.25rem 0.5rem;
+    scrollbar-width: none; /* Firefox hide scrollbar */
+  }
+  .tabs-nav::-webkit-scrollbar {
+    display: none; /* Chrome/Safari hide scrollbar */
+  }
+
+  .tabs-nav button {
+    flex: 1 0 auto;
+    min-width: 33.3%; /* Three tabs fill screen evenly */
+    text-align: center;
+    font-size: var(--text-base);
+    white-space: nowrap;
+    border-radius: 0;
+    border: none;
+    background: var(--surface-2, #111);
+    color: var(--text-1, #fff);
+    padding: 0.75rem 0.25rem;
+  }
+
+  .tabs-nav button.active {
+    background: var(--accent, #FFD140);
+    color: #000;
+  }
+}
+
+/* Ultra-narrow phones (under 400px) */
+@media (max-width: 400px) {
+  .tabs-nav button {
+    min-width: 100%; /* One at a time horizontally scrollable */
+    font-size: 0.95rem;
+  }
+}
   </style>
 </head>
 <body>
