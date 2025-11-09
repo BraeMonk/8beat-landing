@@ -134,13 +134,15 @@
 .scroll-text {
   display: inline-block;
   white-space: nowrap;
-  animation: scroll-left 18s linear infinite;
+  animation: scroll-left 9s linear infinite;
   text-shadow: 0 0 8px rgba(255,255,255,0.25);
+  animation-delay: 0s;
 }
 
 @keyframes scroll-left {
   0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  99.999% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 @keyframes bannerPulse {
@@ -766,7 +768,7 @@
   <!-- 🔔 Beta Banner -->
   <div class="beta-banner">
     <div class="scroll-text">
-      8-Beat Studio <strong>Beta v1.6</strong> is available for testing! —
+      🎧 8-Beat Studio <strong>Beta v1.6</strong> is available for testing! —
       Visit <a href="https://braemonk.github.io/beat-maker/" target="_blank">Launch 8-Beat Studio</a> and share your feedback 🎧
     </div>
   </div>
