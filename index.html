@@ -134,15 +134,15 @@
 .scroll-text {
   display: inline-block;
   white-space: nowrap;
-  animation: scroll-left 6s linear infinite;
+  animation: scroll-left 14s linear infinite;
   text-shadow: 0 0 8px rgba(255,255,255,0.25);
   animation-delay: 0s;
+  transform: translateX(0);
 }
 
 @keyframes scroll-left {
-  0% { transform: translateX(100%); }
-  99.999% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% { transform: translateX(0); }       /* starts from the first character */
+  100% { transform: translateX(-100%); } /* scrolls left until it exits */
 }
 
 @keyframes bannerPulse {
