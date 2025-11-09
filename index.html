@@ -106,6 +106,61 @@
       padding: var(--space-6);
     }
 
+    /* ===========================
+   🔔 Beta Banner (Pulsing LED Style)
+   =========================== */
+.beta-banner {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--bg-primary);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  text-align: center;
+  padding: 0.5rem 0;
+  overflow: hidden;
+  z-index: 999;
+  box-shadow: 0 0 25px rgba(124,131,255,0.35);
+  animation: bannerPulse 4s ease-in-out infinite;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.beta-banner a {
+  color: var(--bg-primary);
+  text-decoration: underline;
+  font-weight: 800;
+}
+
+.scroll-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 18s linear infinite;
+  text-shadow: 0 0 8px rgba(255,255,255,0.25);
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes bannerPulse {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(124,131,255,0.35);
+    background-position: 0% 50%;
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(157,106,255,0.65);
+    background-position: 100% 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .beta-banner {
+    font-size: 0.85rem;
+    padding: 0.4rem 0;
+  }
+}
+    
     .landing-shell {
       max-width: 1280px;
       margin: 0 auto;
@@ -708,6 +763,13 @@
   </style>
 </head>
 <body>
+  <!-- 🔔 Beta Banner -->
+  <div class="beta-banner">
+    <div class="scroll-text">
+      8-Beat Studio <strong>Beta v1.6</strong> is available for testing! —
+      Visit <a href="https://braemonk.github.io/beat-maker/" target="_blank">Launch 8-Beat Studio</a> and share your feedback 🎧
+    </div>
+  </div>
   <div class="landing-shell">
     <div class="landing-inner">
 
