@@ -841,6 +841,20 @@
     margin-right: 0;
   }
 }
+
+/* --- Final Safari-safe overflow fix for Tutorial tab --- */
+#tutorialSection .grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-5);
+  margin-right: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#tutorialSection .card {
+  box-sizing: border-box;
+  max-width: 100%;
+}
   </style>
 </head>
 <body>
