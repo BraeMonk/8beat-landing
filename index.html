@@ -810,28 +810,18 @@
       }
     }
 
-    /* --- Fix Tutorial tab card overflow on small screens --- */
+    /* Tutorial tab – keep current look, but stop horizontal overflow */
+    #tutorialSection {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
 
-/* Let grid items shrink instead of forcing the grid wider */
-.grid-2 > * {
-  min-width: 0;
-}
-
-/* Be extra-safe on the Tutorial tab: no min column width that can push out */
-#tutorialSection .grid-2 {
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  max-width: 100%;
-}
-
-/* Mobile safety net */
-@media (max-width: 768px) {
-  #tutorialSection,
-  #tutorialSection .grid-2,
-  #tutorialSection .card {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-}
+    /* Safety: nothing inside the tutorial grid is allowed to force it wider */
+    #tutorialSection .grid-2,
+    #tutorialSection .card {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
   </style>
 </head>
 <body>
