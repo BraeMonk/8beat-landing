@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>8-Beat Studio – Browser-Native DAW</title>
+  <title>8-Beat Studio – Browser DAW with Harmony-Aware Song Builder</title>
 
   <!-- 📱 Viewport + Theming -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
@@ -16,15 +16,15 @@
   <link rel="apple-touch-icon" href="./lofi8Beat.png" />
 
   <!-- 🧭 SEO + Social Preview -->
-  <meta name="description" content="8-Beat Studio – a powerful, browser-native DAW for creating, recording, and mastering your beats directly in your browser." />
+  <meta name="description" content="8-Beat Studio – a harmony-aware, browser-native DAW with a built-in Song Builder that can compose full arrangements from your chords, then mix and master them in one tab." />
   <meta property="og:title" content="8-Beat Studio – Browser-Native DAW" />
-  <meta property="og:description" content="Create, record, and mix your tracks anywhere. 8-Beat Studio brings professional production to your browser." />
+  <meta property="og:description" content="Compose full songs from your chords with the harmony-aware Song Builder, then record, mix, and master everything inside your browser." />
   <meta property="og:image" content="./lofi8Beat.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://braemonk.github.io/beat-maker/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="8-Beat Studio – Browser-Native DAW" />
-  <meta name="twitter:description" content="Create, record, and mix your tracks anywhere – all in your browser." />
+  <meta name="twitter:description" content="Harmony-aware browser DAW with a built-in Song Builder that turns your key, scale, and progression into full arrangements." />
   <meta name="twitter:image" content="./lofi8Beat.png" />
 
   <style>
@@ -788,7 +788,7 @@
   <!-- 🔔 Beta Banner -->
   <div class="beta-banner">
     <div class="scroll-text">
-      🎧 8-Beat Studio <strong>Beta v1.6</strong> is available for testing! —
+      🎧 8-Beat Studio <strong>Beta v1.7</strong> is available for testing! —
       Visit <a href="https://braemonk.github.io/beat-maker/" target="_blank">Launch 8-Beat Studio</a> and share your feedback 🎧
     </div>
   </div>
@@ -805,8 +805,9 @@
           </div>
         </div>
         <div class="header-cta">
-          <div class="badge badge-pill">v1.6 Pro</div>
+          <div class="badge badge-pill">v1.7 Pro</div>
           <div class="badge">🎵 Harmony-Aware</div>
+          <div class="badge">🤖 Composer Mode</div>
         </div>
       </header>
 
@@ -830,10 +831,12 @@
         <section class="landing-section active" id="homeSection" data-landing-section="home" aria-label="Home">
           <h2 class="hero-title">
             A <span class="gradient">theory-aware</span> DAW<br/>
-            that runs in your browser
+            with a built-in Song Builder
           </h2>
           <p class="hero-sub">
-            8-Beat Studio is a harmony-aware, multitrack production environment that lives in a single tab. Generate beats, build chord progressions, record audio, shape FX, and export full mixes – with your samples actually following your chords.
+            8-Beat Studio is a harmony-aware, multitrack production environment that lives in a single tab. 
+            Use the built-in <strong>Song Builder</strong> to turn your key, scale, and progression into full-length arrangements, 
+            then record audio, shape FX, and export full mixes – with your instruments and samples actually following your chords.
           </p>
           <div class="hero-actions">
             <a href="https://braemonk.github.io/beat-maker/" class="btn btn-primary">
@@ -855,46 +858,62 @@
           </p>
 
           <div class="grid-2">
-            <div class="card">
-              <h3>🎼 Harmony-Aware Engine</h3>
-              <p>Set a key, scale, and octave. Generate and edit chord progressions with templates. Instrument tracks follow your chord changes automatically.</p>
-              <ul class="feature-list">
-                <li>Real-time chord progression editing</li>
-                <li>Genre templates (Lo-Fi, Neo-Soul, Jazz)</li>
-                <li>Instruments adapt to harmony automatically</li>
-              </ul>
-            </div>
+  <div class="card">
+    <h3>🤖 Composer Mode / Song Builder</h3>
+    <p>
+      Turn your harmony into full songs. Song Builder takes your key, scale, and chord progression
+      and generates structured arrangements with intros, verses, choruses, bridges, and outros.
+    </p>
+    <ul class="feature-list">
+      <li>Harmony-aware full-song generation</li>
+      <li>Genre-specific templates (Pop, EDM, Hip-Hop, Ambient, Metal, and more)</li>
+      <li>Randomize sections while keeping theory intact</li>
+    </ul>
+  </div>
 
-            <div class="card">
-              <h3>🥁 Smart Generation</h3>
-              <p>Generate genre-aware drum and instrument patterns instantly. Deep step sequencer with velocity and probability controls.</p>
-              <ul class="feature-list">
-                <li>One-click pattern generation</li>
-                <li>Per-step velocity & probability</li>
-                <li>Multitrack timeline arrangement</li>
-              </ul>
-            </div>
+  <div class="card">
+    <h3>🎼 Harmony-Aware Engine</h3>
+    <p>Set a key, scale, and octave. Generate and edit chord progressions with templates. Instrument tracks follow your chord changes automatically.</p>
+    <ul class="feature-list">
+      <li>Real-time chord progression editing</li>
+      <li>Genre templates (Lo-Fi, Neo-Soul, Jazz)</li>
+      <li>Instruments adapt to harmony automatically</li>
+    </ul>
+  </div>
 
-            <div class="card">
-              <h3>📂 Premium Sample Library</h3>
-              <p>Genre-tuned kits (lofi, metal, trap, DnB, house) plus instruments baked into kit definitions.</p>
-              <ul class="feature-list">
-                <li>Preview & tweak one-shots instantly</li>
-                <li>Generate full sample packs</li>
-                <li>Export kits as ZIP files</li>
-              </ul>
-            </div>
+  <div class="card">
+    <h3>🥁 Smart Generation</h3>
+    <p>
+      Generate genre-aware drum and instrument patterns instantly. Deep step sequencer with velocity
+      and probability controls, plus Song Builder that maps energy and density across sections.
+    </p>
+    <ul class="feature-list">
+      <li>One-click pattern and variation generation</li>
+      <li>Per-step velocity & probability</li>
+      <li>Section-aware arrangements (intro, verse, chorus, bridge)</li>
+    </ul>
+  </div>
 
-            <div class="card">
-              <h3>🎛️ Pro Mixing & FX</h3>
-              <p>Dedicated mixer with per-channel controls. Chainable effects including reverb, delay, and filters.</p>
-              <ul class="feature-list">
-                <li>Professional mixing console</li>
-                <li>Master bus processing</li>
-                <li>Low-latency Web Audio engine</li>
-              </ul>
-            </div>
-          </div>
+  <div class="card">
+    <h3>📂 Premium Sample Library</h3>
+    <p>Genre-tuned kits (lofi, metal, trap, DnB, house) plus instruments baked into kit definitions.</p>
+    <ul class="feature-list">
+      <li>Preview & tweak one-shots instantly</li>
+      <li>Generate full sample packs</li>
+      <li>Export kits as ZIP files</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🎛️ Pro Mixing & FX</h3>
+    <p>Dedicated mixer with per-channel controls. Chainable effects including reverb, delay, and filters.</p>
+    <ul class="feature-list">
+      <li>Professional mixing console</li>
+      <li>Master bus processing</li>
+      <li>Low-latency Web Audio engine</li>
+    </ul>
+  </div>
+</div>
 
           <div class="card">
             <h3>Who is 8-Beat Studio for?</h3>
@@ -935,6 +954,7 @@
                 <li>Use <span class="kbd">Alt</span>/<span class="kbd">Shift</span>/<span class="kbd">Ctrl</span> for velocity & probability</li>
                 <li>Switch to <strong>Harmony</strong> tab and set key, scale, and octave</li>
                 <li>Build progressions by tapping chords or using templates</li>
+                <li>Open the <strong>Song Builder / Composer</strong> tab to turn that harmony into a full song form</li>
               </ol>
             </div>
 
@@ -944,7 +964,7 @@
                 <li>Open <strong>Samples</strong> and choose or randomize a kit</li>
                 <li>Edit parameters: pitch, decay, tone, noise, distortion</li>
                 <li>Load samples into sequencer – they follow your harmony</li>
-                <li>Use <strong>Multitrack</strong> to arrange and record audio</li>
+                <li>Use <strong>Multitrack</strong> to record full Song Builder performances and arrange audio</li>
               </ol>
             </div>
 
@@ -1027,6 +1047,7 @@
               <li>Use Chrome, Edge, or Safari</li>
               <li>Close extra tabs to minimize glitches</li>
               <li>Plug in headphones or monitors</li>
+              <li>Adaptive song length: lighter on phones, extended on desktop</li>
             </ul>
           </div>
 
