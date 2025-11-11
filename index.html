@@ -810,18 +810,37 @@
       }
     }
 
-    /* Tutorial tab – keep current look, but stop horizontal overflow */
-    #tutorialSection {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
+    /* ✅ Proper fix for tutorial tab overflow without cropping */
+#tutorialSection {
+  position: relative;
+  width: 100%;
+}
 
-    /* Safety: nothing inside the tutorial grid is allowed to force it wider */
-    #tutorialSection .grid-2,
-    #tutorialSection .card {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
+#tutorialSection .grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Prevent subpixel overflow without cutting text */
+#tutorialSection .card {
+  max-width: calc(100% - 2px);
+  box-sizing: border-box;
+}
+
+/* Mobile tightening */
+@media (max-width: 768px) {
+  #tutorialSection {
+    padding-right: 0 !important;
+  }
+  #tutorialSection .grid-2 {
+    grid-template-columns: 1fr;
+    margin-right: 0;
+  }
+}
   </style>
 </head>
 <body>
